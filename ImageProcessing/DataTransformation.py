@@ -97,8 +97,6 @@ class ImageTransformation():
                 dist.append(x)
 
 
-            image_size = (data["imageHeight"], data["imageWidth"])
-            file_suffix = data["imagePath"][-4:]
             #数据分块
             if self.register - self.skipfile < int((data_len - self.skipfile) * self.data_segmentation[0]):
                 save_label_name = os.path.join("ImageProcessing/Data/Train/Label", image_file + self.save_png)
