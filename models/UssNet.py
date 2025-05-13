@@ -7,11 +7,10 @@ class SSM_Block(nn.Module):
     def __init__(self,in_c,out_c,dp=0.1):
         super().__init__()
         # self.SSM = nn.Sequential(
-        #     # nn.LayerNorm(in_c),
         #     Mamba(in_c,d_state=16,expand=2),
         #     nn.GELU(),
         #     # nn.Dropout(dp)
-        # )#引入状态空间模型
+
         self.Conv = nn.Sequential(
             nn.Conv2d(in_c,out_c,3,padding=1,bias=False),
             nn.BatchNorm2d(out_c),
@@ -27,9 +26,6 @@ class SSM_Block(nn.Module):
 
     def forward(self,x):
         # block = self.BLOCK(x)
-        #状态空间
-        # B, C, H, W = x.shape
-        # x = x.flatten(2).transpose(1, 2)
         # x = self.SSM(x)
 
         # x = x.reshape(B,H,W,C) .transpose(1, 3)
