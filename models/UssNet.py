@@ -6,10 +6,6 @@ import torch.nn.functional as F
 class SSM_Block(nn.Module):
     def __init__(self,in_c,out_c,dp=0.1):
         super().__init__()
-        # self.SSM = nn.Sequential(
-        #     Mamba(in_c,d_state=16,expand=2),
-        #     nn.GELU(),
-        #     # nn.Dropout(dp)
 
         self.Conv = nn.Sequential(
             nn.Conv2d(in_c,out_c,3,padding=1,bias=False),
@@ -26,9 +22,6 @@ class SSM_Block(nn.Module):
 
     def forward(self,x):
         # block = self.BLOCK(x)
-        # x = self.SSM(x)
-
-        # x = x.reshape(B,H,W,C) .transpose(1, 3)
         x = self.Conv(x)
         # x+=block
         return x
@@ -49,11 +42,11 @@ class UpSampling(nn.Module):
 
     def __init__(self, C):
         super(UpSampling, self).__init__()
-        # 特征图大小扩大2倍，通道数减半
+       
         self.Up = nn.Conv2d(C, C // 2, 1, 1)
 
     def forward(self, x, r):
-        # 使用邻近插值进行下采样
+ 
 
         up = F.interpolate(x, scale_factor=2, mode="bilinear")
         x = self.Up(up)
