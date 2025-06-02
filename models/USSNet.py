@@ -7,8 +7,6 @@ class MccBlock(nn.Module):
         super(MccBlock,self).__init__()
         self.SSM = nn.Sequential(
             # nn.LayerNorm(in_c),
-            Mamba(in_c, d_state=16, expand=2),
-            nn.PReLU(),
             # nn.Dropout(dp)
         )  # 引入状态空间模型
         self.Resblock = nn.Sequential(
@@ -27,8 +25,6 @@ class MccBlock(nn.Module):
 
     def forward(self, x):
         block = self.Resblock(x)
-        x = self.SSM(x)
-        x = x.reshape(B, H, W, C).transpose(1, 3)
         x = self.Conv(x)
         x += block
 
